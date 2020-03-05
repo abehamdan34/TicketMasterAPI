@@ -1,0 +1,12 @@
+--CREATE TABLE Favorite(
+--Id INT PRIMARY KEY IDENTITY (1,1),
+--EventName NVARCHAR(250),
+--StartDate DATE,
+--VenueName NVARCHAR(250),
+--VenueAddress NVARCHAR(250),
+--EventUrl NVARCHAR(250),
+--UserId NVARCHAR(450) FOREIGN KEY REFERENCES AspNetUsers(Id)
+--)
+
+--SELECT * FROM Favorite
+

@@ -1,8 +1,20 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model List<Event>
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<table>
+    @foreach (Event events in Model)
+    {
+        <tr>
+            <td>@events.name</td>
+            <td>@events.eventUrl</td>
+        </tr>
+    }
+
+</table>
