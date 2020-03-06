@@ -1,20 +1,32 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@model List<Event>
+@model Rootobject
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to Master of Tickets!</h1>
+    <p>You can find more information on events below</p>
 </div>
 
-<table>
-    @foreach (Event events in Model)
-    {
-        <tr>
-            <td>@events.name</td>
-            <td>@events.eventUrl</td>
-        </tr>
-    }
 
+
+<table class="table">
+    <tr>
+        <th>Event Name</th>
+        <th>Event Date</th>
+        <th>Venue Name</th>
+        <th>Venue Address</th>
+        <th>Event URL</th>
+    </tr>
+    @foreach (Event TmEvent in Model._embedded.events)
+    {
+    <tr>
+        <td>@TmEvent.name</td>
+        <td>@TmEvent.dates.start.dateTime</td>
+        <td>@TmEvent._embedded.venue[0].name</td>
+        <td>@TmEvent._embedded.venue[0].address.line1, @TmEvent._embedded.venue[0].address.line2</td>
+        <td>@TmEvent.eventUrl</td>
+    </tr>
+    }
 </table>
+

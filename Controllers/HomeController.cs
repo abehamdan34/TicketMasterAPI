@@ -6,40 +6,40 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using APIGroupProject.Models;
+using Microsoft.Extensions.Configuration;
+using System.Net.Http;
 
 namespace APIGroupProject.Controllers
 {
     public class HomeController : Controller
     {
 
-        private readonly IdentityFavoriteDbContext _context;
 
-        public HomeController(IdentityFavoriteDbContext context)
+        private readonly string APIKEYVARIABLE;
+        public HomeController(IConfiguration configuration)
         {
-            _context = context;
+            APIKEYVARIABLE = configuration.GetSection("APIKeys")["TicketMasterAPI"];
+        }
+        public async Task<IActionResult> Index()
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://app.ticketmaster.com/discovery/v1/");
+            var response = await client.GetAsync($"events.json?apikey={APIKEYVARIABLE}");
+
+
+            var result = await response.Content.ReadAsAsync<Rootobject>();
+
+            return View(result);
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //    public IActionResult Index()
+        //{
+        //    return View();
+        //}
 
         public IActionResult Privacy()
         {
             return View();
-        }
-
-        public IActionResult RemoveFavoriteEvent(int id)
-        {
-            //may need to change the name Event to what Abe creates and sends to the database.
-            Favorite findFavorite = _context.Favorite.Find(id); 
-            if(findFavorite != null)
-            {
-                _context.Favorite.Remove(findFavorite);
-                _context.SaveChanges();
-            }
-
-            return RedirectToAction("Index"); //redirect to the view page of favorites. 
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

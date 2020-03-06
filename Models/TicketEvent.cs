@@ -40,14 +40,14 @@ namespace APIGroupProject.Models
     {
         public string name { get; set; }
         public string locale { get; set; }
-        public string eventUrl { get; set; }
+        public int[] promoterId { get; set; }
         public Dates dates { get; set; }
         public bool test { get; set; }
         public _Links1 _links { get; set; }
         public string id { get; set; }
         public _Embedded1 _embedded { get; set; }
         public string type { get; set; }
-        public int[] promoterId { get; set; }
+        public string eventUrl { get; set; }
         public Sales sales { get; set; }
     }
 
@@ -93,7 +93,7 @@ namespace APIGroupProject.Models
     public class _Links1
     {
         public Self1 self { get; set; }
-        public Category[] categories { get; set; }
+        public object categories { get; set; }
         public object attractions { get; set; }
         public Venue venue { get; set; }
     }
@@ -108,15 +108,10 @@ namespace APIGroupProject.Models
         public string href { get; set; }
     }
 
-    public class Category
-    {
-        public string href { get; set; }
-    }
-
     public class _Embedded1
     {
         public Venue1[] venue { get; set; }
-        public Category1[] categories { get; set; }
+        public Category[] categories { get; set; }
         public Attraction[] attractions { get; set; }
     }
 
@@ -173,7 +168,7 @@ namespace APIGroupProject.Models
         public string href { get; set; }
     }
 
-    public class Category1
+    public class Category
     {
         public string name { get; set; }
         public int level { get; set; }
@@ -195,11 +190,16 @@ namespace APIGroupProject.Models
     public class Attraction
     {
         public string url { get; set; }
+        public Image image { get; set; }
         public string name { get; set; }
         public _Links4 _links { get; set; }
         public string id { get; set; }
         public string type { get; set; }
-        public Image image { get; set; }
+    }
+
+    public class Image
+    {
+        public string url { get; set; }
     }
 
     public class _Links4
@@ -210,11 +210,6 @@ namespace APIGroupProject.Models
     public class Self4
     {
         public string href { get; set; }
-    }
-
-    public class Image
-    {
-        public string url { get; set; }
     }
 
     public class Sales
