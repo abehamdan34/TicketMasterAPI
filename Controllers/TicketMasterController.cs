@@ -17,6 +17,5 @@ namespace APIGroupProject.Controllers
         {
             APIKEYVARIABLE = configuration.GetSection("APIKeys")["TicketMasterAPI"];
         }
-       
     }
 }
