@@ -36,7 +36,18 @@ namespace APIGroupProject.Controllers
         //{
         //    return View();
         //}
+        public IActionResult RemoveFavoriteEvent(int id)
+        {
+            //may need to change the name Event to what Abe creates and sends to the database.
+            Favorite findFavorite = _context.Favorite.Find(id);
+            if (findFavorite != null)
+            {
+                _context.Favorite.Remove(findFavorite);
+                _context.SaveChanges();
+            }
 
+            return RedirectToAction("Index"); //redirect to the view page of favorites. 
+        }
         public IActionResult Privacy()
         {
             return View();
