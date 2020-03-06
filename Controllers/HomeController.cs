@@ -6,22 +6,36 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using APIGroupProject.Models;
+using Microsoft.Extensions.Configuration;
+using System.Net.Http;
 
 namespace APIGroupProject.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        private readonly string APIKEYVARIABLE;
+        public HomeController(IConfiguration configuration)
         {
-            _logger = logger;
+            APIKEYVARIABLE = configuration.GetSection("APIKeys")["TicketMasterAPI"];
+        }
+        public async Task<IActionResult> Index()
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://app.ticketmaster.com/discovery/v1/");
+            var response = await client.GetAsync($"events.json?apikey={APIKEYVARIABLE}");
+
+
+            var result = await response.Content.ReadAsAsync<Rootobject>();
+
+            return View(result);
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //    public IActionResult Index()
+        //{
+        //    return View();
+        //}
 
         public IActionResult Privacy()
         {
