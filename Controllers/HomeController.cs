@@ -14,10 +14,11 @@ namespace APIGroupProject.Controllers
     public class HomeController : Controller
     {
 
-
+        private readonly IdentityFavoriteDbContext _context;
         private readonly string APIKEYVARIABLE;
-        public HomeController(IConfiguration configuration)
+        public HomeController(IConfiguration configuration, IdentityFavoriteDbContext context)
         {
+            _context = context;
             APIKEYVARIABLE = configuration.GetSection("APIKeys")["TicketMasterAPI"];
         }
         public async Task<IActionResult> Index()
@@ -30,6 +31,10 @@ namespace APIGroupProject.Controllers
             var result = await response.Content.ReadAsAsync<Rootobject>();
 
             return View(result);
+        }
+        public IActionResult DisplayFavorite()
+        {
+            return View(_context.Favorite.ToList());
         }
 
         //    public IActionResult Index()
