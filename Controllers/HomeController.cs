@@ -44,7 +44,11 @@ namespace APIGroupProject.Controllers
         }
         public IActionResult DisplayFavorite()
         {
-            return View(_context.Favorite.ToList());
+         //   return View(_context.Favorite.ToList());
+
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List<Favorite> thisUsersFavs = _context.Favorite.Where(x => x.UserId == id).ToList();
+            return View(thisUsersFavs);
         }
 
         //    public IActionResult Index()
@@ -88,14 +92,15 @@ namespace APIGroupProject.Controllers
             Favorite favorite = new Favorite(result.name, result.dates.start.dateTime, result._embedded.venue[0].name, venueAddress, result.eventUrl);
 
             favorite.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string ID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            List<Favorite> already = _context.Favorite.ToList();
+            List<Favorite> already = _context.Favorite.Where(x => x.UserId == ID).ToList();
 
             for (int i = 0; i < already.Count; i++)
             {
                 if (already[i].EventName == result.name)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("DisplayEvents");
 
                 }
             }
