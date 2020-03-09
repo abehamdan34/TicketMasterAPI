@@ -13,12 +13,14 @@ namespace APIGroupProject.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IdentityFavoriteDbContext _context;
 
 
         private readonly string APIKEYVARIABLE;
-        public HomeController(IConfiguration configuration)
+        public HomeController(IConfiguration configuration, IdentityFavoriteDbContext context)
         {
             APIKEYVARIABLE = configuration.GetSection("APIKeys")["TicketMasterAPI"];
+            _context = context;
         }
         public async Task<IActionResult> Index()
         {
