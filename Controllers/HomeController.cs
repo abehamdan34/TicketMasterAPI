@@ -9,9 +9,11 @@ using APIGroupProject.Models;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace APIGroupProject.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
 
@@ -78,6 +80,7 @@ namespace APIGroupProject.Controllers
 
             Favorite favorite = new Favorite(result.name, result.dates.start.dateTime, result._embedded.venue[0].name, venueAddress, result.eventUrl);
 
+            favorite.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             _context.Favorite.Add(favorite);
             _context.SaveChanges();

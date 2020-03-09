@@ -17,13 +17,13 @@ namespace APIGroupProject.Models
 
         public Favorite() { }
 
-        public Favorite(string _eventName, DateTime _startDate, string _venueName, string _venueAddress, string eventURL)
+        public Favorite(string _eventName, DateTime _startDate, string _venueName, string _venueAddress, string _eventURL)
         {
             EventName = _eventName;
             StartDate = _startDate;
             VenueName = _venueName;
             VenueAddress = _venueAddress;
-            EventUrl = _eventName;
+            EventUrl = _eventURL;
         }
     }
 
