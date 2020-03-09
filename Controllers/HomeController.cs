@@ -18,7 +18,7 @@ namespace APIGroupProject.Controllers
     {
         private readonly IdentityFavoriteDbContext _context;
 
-        private readonly IdentityFavoriteDbContext _context;
+       
         private readonly string APIKEYVARIABLE;
         public HomeController(IConfiguration configuration, IdentityFavoriteDbContext context)
         {
