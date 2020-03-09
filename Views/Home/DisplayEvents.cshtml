@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "DisplayEvents";
+}
+
+@model Rootobject
+<div class="text-center">
+    <h1>Here are all your Events!</h1>
+</div>
+
+<table class="table">
+    <tr>
+        <th>Event Name</th>
+        <th>Event Date</th>
+        <th>Venue Name</th>
+        <th>Venue Address</th>
+        <th>Event URL</th>
+    </tr>
+    @foreach (Event TmEvent in Model._embedded.events)
+    {
+        <tr>
+            <td>@TmEvent.name</td>
+            <td>@TmEvent.dates.start.dateTime</td>
+            <td>@TmEvent._embedded.venue[0].name</td>
+            <td>@TmEvent._embedded.venue[0].address.line1, @TmEvent._embedded.venue[0].address.line2</td>
+            <td>@TmEvent.eventUrl</td>
+            <td><a class="btn" href="../Home/AddFavoriteEvent?id=@TmEvent.id">Add to Favorites</a><br /></td>
+        </tr>
+    }
+</table>

@@ -3,31 +3,14 @@
 }
 @model Rootobject
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to Master of Tickets!</h1>
-    <p>You can find more information on events below</p>
-</div>
+    <div class="text-center">
+        <h1 class="display-4">Welcome to Master of Tickets!</h1>
+        @*<p>You can find more information on events below</p>*@
+        @*<p><a href="../Home/DisplayEvents">Display All Events</a></p>*@
+        <br />
+        <br />
+        
+        <p> <img src="https://data.whicdn.com/images/260906710/original.gif" alt="Concert Pic 1" align="middle" width="1200" /></p>
+    </div>
 
-
-
-<table class="table">
-    <tr>
-        <th>Event Name</th>
-        <th>Event Date</th>
-        <th>Venue Name</th>
-        <th>Venue Address</th>
-        <th>Event URL</th>
-    </tr>
-    @foreach (Event TmEvent in Model._embedded.events)
-    {
-    <tr>
-        <td>@TmEvent.name</td>
-        <td>@TmEvent.dates.start.dateTime</td>
-        <td>@TmEvent._embedded.venue[0].name</td>
-        <td>@TmEvent._embedded.venue[0].address.line1, @TmEvent._embedded.venue[0].address.line2</td>
-        <td>@TmEvent.eventUrl</td>
-        <td><a class="btn" href="../Home/AddFavoriteEvent?id=@TmEvent.id">Add to Favorites</a><br /></td>
-    </tr>
-    }
-</table>
 

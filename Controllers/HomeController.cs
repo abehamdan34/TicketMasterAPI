@@ -24,7 +24,20 @@ namespace APIGroupProject.Controllers
             _context = context;
             APIKEYVARIABLE = configuration.GetSection("APIKeys")["TicketMasterAPI"];
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
+        {
+            //HttpClient client = new HttpClient();
+            //client.BaseAddress = new Uri("https://app.ticketmaster.com/discovery/v1/");
+            //var response = await client.GetAsync($"events.json?apikey={APIKEYVARIABLE}");
+
+
+            //var result = await response.Content.ReadAsAsync<Rootobject>();
+
+            //return View(result);
+            return View();
+        }
+
+        public async Task<IActionResult> DisplayEvents()
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("https://app.ticketmaster.com/discovery/v1/");
@@ -86,7 +99,7 @@ namespace APIGroupProject.Controllers
             _context.SaveChanges();
 
 
-            return RedirectToAction("Index");
+            return RedirectToAction("DisplayEvents");
 
         }
     }
