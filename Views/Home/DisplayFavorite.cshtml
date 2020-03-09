@@ -3,15 +3,16 @@
     ViewData["Title"] = "DisplayFavorite";
 }
 @model List<Favorite>
-<h1>Display Favorite</h1>
+<h1 class="text-center">Your Favorites</h1>
 
 <table class="table">
     <tr>
-        <th>Event Name</th>
-        <th>Event Date</th>
-        <th>Venue Name</th>
-        <th>Venue Address</th>
-        <th>Event URL</th>
+        <th class="sticky-top" scope="col" style="background-color:blueviolet">Event Name</th>
+        <th class="sticky-top" scope="col" style="background-color:blueviolet">Event Date</th>
+        <th class="sticky-top" scope="col" style="background-color:blueviolet">Venue Name</th>
+        <th class="sticky-top" scope="col" style="background-color:blueviolet">Venue Address</th>
+        <th class="sticky-top" scope="col" style="background-color:blueviolet">Event URL</th>
+        <th class="sticky-top" scope="col" style="background-color:blueviolet">Remove Favorite</th>
     </tr>
     @foreach (var favorite in Model)
     {
@@ -30,7 +31,7 @@
        <td>Unavailable</td>
     }
     <td>
-        <a href="../Home/RemoveFavoriteEvent?id=@favorite.Id">Remove Event</a>
+        <a class="btn" href="../Home/RemoveFavoriteEvent?id=@favorite.Id"><span class="glyphicon">&times;</span><br /></a>
     </td>
 </tr>
     }
