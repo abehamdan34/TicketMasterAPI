@@ -89,6 +89,17 @@ namespace APIGroupProject.Controllers
 
             favorite.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
+            List<Favorite> already = _context.Favorite.ToList();
+
+            for (int i = 0; i < already.Count; i++)
+            {
+                if (already[i].EventName == result.name)
+                {
+                    return RedirectToAction("Index");
+
+                }
+            }
+
             _context.Favorite.Add(favorite);
             _context.SaveChanges();
 
