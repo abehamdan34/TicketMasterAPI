@@ -28,14 +28,6 @@ namespace APIGroupProject.Controllers
         }
         public IActionResult Index()
         {
-            //HttpClient client = new HttpClient();
-            //client.BaseAddress = new Uri("https://app.ticketmaster.com/discovery/v1/");
-            //var response = await client.GetAsync($"events.json?apikey={APIKEYVARIABLE}");
-
-
-            //var result = await response.Content.ReadAsAsync<Rootobject>();
-
-            //return View(result);
             return View();
         }
 

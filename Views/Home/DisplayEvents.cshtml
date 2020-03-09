@@ -5,16 +5,21 @@
 
 @model Rootobject
 <div class="text-center">
-    <h1>Here are all your Events!</h1>
+    <h1 class="display-4">Welcome to Master of Events!</h1>
+    <h3>You can find more information on events below</h3>
 </div>
 
-<table class="table">
+
+
+<table class="table ">
     <tr>
-        <th>Event Name</th>
-        <th>Event Date</th>
-        <th>Venue Name</th>
-        <th>Venue Address</th>
-        <th>Event URL</th>
+        <th class="sticky-top" scope="col" style="background-color:blueviolet">Event Name</th>
+        <th class="sticky-top" scope="col" style="background-color:blueviolet">Event Date</th>
+        <th class="sticky-top" scope="col" style="background-color:blueviolet">Venue Name</>
+        <th class="sticky-top" scope="col" style="background-color:blueviolet">Venue Address</th>
+        <th class="sticky-top" scope="col" style="background-color:blueviolet">Event URL</th>
+        <th class="sticky-top" scope="col" style="background-color:blueviolet"></th>
+        <th class="sticky-top" scope="col" style="background-color:blueviolet">Add to Favorites</th>
     </tr>
     @foreach (Event TmEvent in Model._embedded.events)
     {
@@ -23,8 +28,19 @@
             <td>@TmEvent.dates.start.dateTime</td>
             <td>@TmEvent._embedded.venue[0].name</td>
             <td>@TmEvent._embedded.venue[0].address.line1, @TmEvent._embedded.venue[0].address.line2</td>
-            <td>@TmEvent.eventUrl</td>
-            <td><a class="btn" href="../Home/AddFavoriteEvent?id=@TmEvent.id">Add to Favorites</a><br /></td>
+            @if (@TmEvent.eventUrl != null)
+            {
+                <td><a href="@TmEvent.eventUrl">Visit event link</a></td>
+
+            }
+            else
+            {
+                <td>Unavailable</td>
+            }
+            <td>
+
+            <td><a class="btn" href="../Home/AddFavoriteEvent?id=@TmEvent.id"><span class="glyphicon">&#11088;</span></a><br /></td>
+
         </tr>
     }
 </table>
