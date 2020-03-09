@@ -8,17 +8,21 @@ using Microsoft.Extensions.Logging;
 using APIGroupProject.Models;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace APIGroupProject.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IdentityFavoriteDbContext _context;
 
-
+        private readonly IdentityFavoriteDbContext _context;
         private readonly string APIKEYVARIABLE;
         public HomeController(IConfiguration configuration, IdentityFavoriteDbContext context)
         {
+            _context = context;
             APIKEYVARIABLE = configuration.GetSection("APIKeys")["TicketMasterAPI"];
             _context = context;
         }
@@ -32,6 +36,10 @@ namespace APIGroupProject.Controllers
             var result = await response.Content.ReadAsAsync<Rootobject>();
 
             return View(result);
+        }
+        public IActionResult DisplayFavorite()
+        {
+            return View(_context.Favorite.ToList());
         }
 
         //    public IActionResult Index()
@@ -48,7 +56,7 @@ namespace APIGroupProject.Controllers
                 _context.SaveChanges();
             }
 
-            return RedirectToAction("Index"); //redirect to the view page of favorites. 
+            return RedirectToAction("DisplayFavorite"); //redirect to the view page of favorites. 
         }
         public IActionResult Privacy()
         {
@@ -59,6 +67,29 @@ namespace APIGroupProject.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public async Task<IActionResult> AddFavoriteEvent(string id)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://app.ticketmaster.com/discovery/v1/");
+            var response = await client.GetAsync($"events/{id}.json?apikey={APIKEYVARIABLE}");
+
+
+            var result = await response.Content.ReadAsAsync<Event>();
+
+            string venueAddress = result._embedded.venue[0].address.line1 + ", " + result._embedded.venue[0].address.line2;
+
+            Favorite favorite = new Favorite(result.name, result.dates.start.dateTime, result._embedded.venue[0].name, venueAddress, result.eventUrl);
+
+            favorite.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            _context.Favorite.Add(favorite);
+            _context.SaveChanges();
+
+
+            return RedirectToAction("Index");
+
         }
     }
 }

@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewData["Title"] = "DisplayFavorite";
+}
+@model List<Favorite>
+<h1>Display Favorite</h1>
+
+<table class="table">
+    <tr>
+        <th>Event Name</th>
+        <th>Event Date</th>
+        <th>Venue Name</th>
+        <th>Venue Address</th>
+        <th>Event URL</th>
+    </tr>
+    @foreach (var favorite in Model)
+    {
+<tr>
+    <td>@favorite.EventName</td>
+    <td>@favorite.StartDate</td>
+    <td>@favorite.VenueName</td>
+    <td>@favorite.VenueAddress</td>
+    @if (favorite.EventUrl != null)
+    {
+        <td><a href="@favorite.EventUrl">Visit event link</a></td>
+
+    }
+    else
+    {
+       <td>Unavailable</td>
+    }
+    <td>
+        <a href="../Home/RemoveFavoriteEvent?id=@favorite.Id">Remove Event</a>
+    </td>
+</tr>
+    }
+</table>
